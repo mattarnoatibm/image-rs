@@ -67,8 +67,8 @@ impl RegistryClient {
             RegistryAuth::Anonymous => {
                 bail!("Trying to get signature from a registry without providing auth information")
             }
-            RegistryAuth::Basic(username, password) => {
-                let oci_distribution_client = oci_distribution::client::Client::default();
+            RegistryAuth::Basic(_username, _password) => {
+                let mut oci_distribution_client = oci_distribution::client::Client::default();
                 let auth_token = oci_distribution_client
                     .auth(&image.reference, auth, RegistryOperation::Pull)
                     .await
