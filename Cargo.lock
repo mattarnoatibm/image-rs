@@ -2486,7 +2486,7 @@ dependencies = [
  "nix 0.26.4",
  "nydus-api",
  "nydus-service",
- "oci-distribution",
+ "oci-distribution 0.10.0",
  "oci-spec",
  "ocicrypt-rs",
  "openssl",
@@ -3444,9 +3444,9 @@ dependencies = [
 [[package]]
 name = "oci-distribution"
 version = "0.9.4"
-source = "git+https://github.com/krustlet/oci-distribution.git?rev=f44124c#f44124c3c0875821d0b84a6632bf70b6d6eaf9ef"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ac5b780ce1bd6c3c2ff72a3013f4b2d56d53ae03b20d424e99d2f6556125138"
 dependencies = [
- "chrono",
  "futures",
  "futures-util",
  "http",
@@ -3462,6 +3462,30 @@ dependencies = [
  "thiserror",
  "tokio",
  "tokio-util",
+ "tracing",
+ "unicase",
+]
+
+[[package]]
+name = "oci-distribution"
+version = "0.10.0"
+source = "git+https://github.com/mattarnoatibm/oci-distribution.git?branch=return-bearer-auth#717dad1fab47adf6e13ae4a96d00f5a84ee8813e"
+dependencies = [
+ "bytes",
+ "chrono",
+ "futures-util",
+ "http",
+ "http-auth",
+ "jwt",
+ "lazy_static",
+ "olpc-cjson",
+ "regex",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "sha2 0.10.7",
+ "thiserror",
+ "tokio",
  "tracing",
  "unicase",
 ]
@@ -5368,7 +5392,7 @@ dependencies = [
  "elliptic-curve 0.12.3",
  "getrandom 0.2.10",
  "lazy_static",
- "oci-distribution",
+ "oci-distribution 0.9.4",
  "olpc-cjson",
  "p256 0.12.0",
  "p384 0.12.0",

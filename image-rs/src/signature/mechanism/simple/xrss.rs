@@ -7,7 +7,7 @@ use anyhow::*;
 use base64::Engine;
 use oci_distribution::{
     secrets::RegistryAuth,
-    token_cache::RegistryOperation,
+    RegistryOperation,
     Reference,
 };
 use reqwest::{header::HeaderValue, Client};
@@ -77,7 +77,7 @@ impl RegistryClient {
                     bail!("Authenticating with the registry did not return an oauth token");
                 }
 
-                Ok(auth_token?)
+                Ok(auth_token.unwrap())
             }
         }
     }
