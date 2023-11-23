@@ -5,7 +5,10 @@
 
 use anyhow::*;
 use base64::Engine;
-use oci_distribution::{secrets::RegistryAuth, Reference};
+use oci_distribution::{
+    secrets::{RegistryAuth, RegistryOperation},
+    Reference,
+};
 use reqwest::{header::HeaderValue, Client};
 use serde::*;
 
@@ -64,29 +67,13 @@ impl RegistryClient {
                 bail!("Trying to get signature from a registry without providing auth information")
             }
             RegistryAuth::Basic(username, password) => {
-                let scope = format!("repository:{}:pull", image.reference.repository());
-                let res = self
-                    .client
-                    .get(format!(
-                        "https://{}/oauth/token",
-                        image.reference.registry()
-                    ))
-                    .query(&[
-                        ("account", username),
-                        ("scope", &scope),
-                        ("service", &"registry".to_string()),
-                    ])
-                    .basic_auth(username, Some(password))
-                    .send()
+                let oci_distribution_client = oci_distribution::client::Client::default();
+                let auth_token = oci_distribution_client
+                    .auth(&image.reference, auth, RegistryOperation::Pull)
                     .await
-                    .context("Failed to fetch oauth token for registry")?;
-
-                let oauth_token_response_body: GetOAuthTokenResponse = res
-                    .json::<GetOAuthTokenResponse>()
-                    .await
-                    .context("Unexpected response from fetching oauth token from registry")?;
-
-                Ok(oauth_token_response_body.token)
+                    .context("Failed to authenticate with the registry")?;
+                Ok(auth_token
+                    .context("Authenticating with the registry did not return an oauth token")?)
             }
         }
     }
