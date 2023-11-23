@@ -71,4 +71,4 @@ uuid = "1"
 zeroize = "1.5.7"
 
 [patch.crates-io]
-oci-distribution = { git = "https://github.com/mattarnoatibm/oci-distribution.git", branch = "return-bearer-auth" }
+oci-distribution = { git = "https://github.com/mattarnoatibm/oci-distribution.git", branch = "return-auth-token-base-f44124c" }

@@ -27,7 +27,7 @@ libc = "0.2"
 log = "0.4.14"
 loopdev = { git = "https://github.com/mdaffin/loopdev", rev = "c9f91e8f0326ce8a3364ac911e81eb32328a5f27"}
 nix = { version = "0.26", optional = true }
-oci-distribution = { git = "https://github.com/mattarnoatibm/oci-distribution.git", branch = "return-bearer-auth", default-features = false, optional = true }
+oci-distribution = { git = "https://github.com/mattarnoatibm/oci-distribution.git", branch = "return-auth-token-base-f44124c", default-features = false, optional = true }
 oci-spec = "0.6.2"
 ocicrypt-rs = { path = "../ocicrypt-rs", default-features = false, features = ["async-io"], optional = true }
 prost = { workspace = true, optional = true }
