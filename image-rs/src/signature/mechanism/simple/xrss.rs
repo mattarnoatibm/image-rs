@@ -6,7 +6,8 @@
 use anyhow::*;
 use base64::Engine;
 use oci_distribution::{
-    secrets::{RegistryAuth, RegistryOperation},
+    secrets::RegistryAuth,
+    token_cache::RegistryOperation,
     Reference,
 };
 use reqwest::{header::HeaderValue, Client};
@@ -72,8 +73,11 @@ impl RegistryClient {
                     .auth(&image.reference, auth, RegistryOperation::Pull)
                     .await
                     .context("Failed to authenticate with the registry")?;
-                Ok(auth_token
-                    .context("Authenticating with the registry did not return an oauth token")?)
+                if auth_token.is_none() {
+                    bail!("Authenticating with the registry did not return an oauth token");
+                }
+
+                Ok(auth_token?)
             }
         }
     }
